@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link href="imgs/icon.png" rel="icon">
+    <script src="https://fastly.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <title>随笔一记 (By Mr.Gong)</title>
+</head>
+
+<body>
+    <!-- <audio controls="controls" autoplay="autoplay" loop="loop" preload="auto">
+        <source src="music/Previous life.mp3" type="audio/mpeg">
+        <source src="music/world.mp3" type="audio/mpeg">
+        <source src="music/Spirited away.mp3" type="audio/mpeg">
+        <source src="music/Butterfly.mp3" type="audio/mpeg">
+    </audio> -->
+    <div class="page">
+        <nav class="">
+            <div class="info">
+                <div class="avatar">
+                    <img src="imgs/avatar.jpg" alt="">
+                </div>
+                <div class="desc">
+                    <span class="author">Mr.Gong</span>
+                    <span class="school">South-Central Minzu University</span>
+                </div>
+            </div>
+            <div class="menu-fold">
+                <ul>
+                    <li class="menu-item"><a href="" class="item-projects item-active">Home</a></li>
+                    <li class="menu-item"><a href="" class="item-projects">Projects</a></li>
+                    <li class="menu-item"><a href="" class="item-projects">Moments</a></li>
+                    <li class="menu-item"><a href="http://mrgong.tech/resume" class="item-projects">Resume</a></li>
+                    <li class="menu-item"><a href="" class="item-projects">About</a></li>
+                </ul>
+            </div>
+            <div class="menu" onclick="">
+                <img src="imgs/icon-menu.svg" width="18" class="menu-img" onclick="openMenu()">
+                <img src="imgs/icon-close.svg" width="18" class="menu-close" onclick="closeMenu()">
+            </div>
+            <div class="footer">
+                <span>© 2022 Mr.Gong All rights reserved.</span>
+                <a href="http://beian.miit.gov.cn/">鄂ICP备2022006022号</a>
+            </div>
+        </nav>
+
+        <main>
+            <div class="content">
+                <h1>Hello! Welcome to visit my blog!</h1>
+                <h3>These are currently accessible sites:</h3>
+                <div class="blog-group">
+                    <div class="blog-item"><a href="http://mrgong.tech/resume">Resume</a></div>
+                    <div class="blog-item"><a href="http://mrgong.tech/Q-A/">Q & A</a></div>
+                    <div class="blog-item"><a href="http://mrgong.tech/LeetCode/">LeetCode</a></div>
+                    <div class="blog-item"><a href="http://mrgong.tech/zhi/">什么值得买</a></div>
+                    <div class="blog-item"><a href="http://mrgong.tech/qqmusic/">QQ音乐</a></div>
+                    <div class="blog-item"><a href="http://mrgong.tech/qqmusic2.0/">QQ音乐2.0</a></div>
+                    <div class="blog-item"><a href="http://mrgong.tech/dribbble/">Dribbble</a></div>
+                    <div class="blog-item"><a href="http://mrgong.tech">To be developed</a></div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <span>© 2022 Mr.Gong All rights reserved.</span>
+            <a href="http://beian.miit.gov.cn/">鄂ICP备2022006022号</a>
+        </footer>
+    </div>
+    <script>
+        function resize() {
+            let doc = document.documentElement
+            let width = doc.clientWidth
+            let ratio = width / 375
+            let fontSize = 10 * ratio
+            if (fontSize > 20) fontSize = 20
+            doc.style.fontSize = fontSize + 'px'
+        }
+        resize()
+    </script>
+    <script>
+        function openMenu() {
+            var menuImg = document.querySelector('.menu-img');
+            var menuClose = document.querySelector('.menu-close');
+            var menuFold = document.querySelector('.menu-fold');
+            menuFold.style.display = "block";
+            menuImg.style.display = "none";
+            menuClose.style.display = "block";
+
+        }
+
+        function closeMenu() {
+            var menuImg = document.querySelector('.menu-img');
+            var menuClose = document.querySelector('.menu-close');
+            var menuFold = document.querySelector('.menu-fold');
+            menuFold.style.display = "none";
+            menuClose.style.display = "none";
+            menuImg.style.display = "block";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,311 @@
+/* 1.根样式 */
+
+:root {
+    --default-color: blue;
+    --spring-color: rgb(49, 194, 124);
+    --summer-color: rgb(234, 76, 137);
+    --autumn-color: orange;
+    --winter-color: aqua;
+    --text-color: #333;
+    --text-white-color: white;
+    --a-color: #999;
+    /*spring*/
+    --theme1-a-color: #1E705D;
+    --theme1-b-color: #F7B1A4;
+    --theme1-c-color: #F0816D;
+    --theme1-d-color: #D9E4B0;
+    /*summer*/
+    --theme2-a-color: #FF9A43;
+    --theme2-b-color: #348669;
+    /*hot*/
+    --theme3-a-color: #FE8502;
+    --theme3-b-color: #DC3512;
+    --theme3-c-color: #FDD32A;
+    /*cute*/
+    --theme4-a-color: #8A75EB;
+    --theme4-b-color: #F3BED2;
+    /*网球场*/
+    --theme5-a-color: #188460;
+    --theme5-b-color: #D9E4B0;
+    /*静夜*/
+    --theme6-a-color: #1A3E8D;
+    --theme6-b-color: #AEA7BD;
+    --theme6-c-color: #72A0E1;
+    --theme6-font-color: #2A1328;
+    /*autumn*/
+    --theme7-a-color: #E0B36C;
+    --theme7-b-color: #F1ECD1;
+    --theme7-c-color: #8A5539;
+    --theme7-font-color: #524C55;
+    /*圣诞1*/
+    --theme8-a-color: #FCFCFB;
+    --theme8-b-color: #BD9D90;
+    --theme8-c-color: #385139;
+    --theme8-d-color: #C93B34;
+    --theme8-e-color: #4B3533;
+    /*圣诞2*/
+    --theme9-a-color: #FBFBF2;
+    --theme9-b-color: #940D14;
+    --theme9-c-color: #D99C63;
+    --theme9-d-color: #D7A3A1;
+    /*林间小屋*/
+    --theme10-a-color: #416D5A;
+    --theme10-b-color: #F7E4E2;
+    --theme10-c-color: #76BCA9;
+    --theme10-d-color: #675928;
+}
+
+
+/* nav,
+main,
+footer {
+    border: 1px solid red;
+} */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+.page {
+    margin: 0;
+}
+
+html {
+    font-size: 10px;
+}
+
+span {
+    text-decoration: none;
+    color: var(--text-white-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-white-color);
+    transition: color 0.5s;
+}
+
+a:hover {
+    text-decoration: none;
+    color: var(--theme1-c-color);
+}
+
+
+/* 2.整体布局 */
+
+nav {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--theme1-a-color);
+    z-index: 2;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+main {
+    padding: 80px 20px;
+    background-color: var(--theme1-d-color);
+    color: var(--theme1-a-color);
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 30px 0;
+    background-color: var(--theme1-a-color);
+}
+
+.footer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+}
+
+
+/* nav栏布局 */
+
+.info {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.desc {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.avatar img {
+    max-width: 60px;
+    border-radius: 80px;
+}
+
+.author {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.school {
+    font-size: 0.5rem;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+.menu-close {
+    display: none;
+}
+
+.menu-fold {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 80px;
+    padding-top: 20px;
+    background-color: var(--theme1-a-color);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 23px;
+}
+
+.menu-item {
+    padding-top: 14px;
+    padding-bottom: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 22px;
+    color: #6e6d7a;
+    display: block;
+}
+
+.item-active {
+    color: var(--theme1-c-color);
+}
+
+
+/* main栏布局 */
+
+.blog-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: minmax(235px, auto);
+    grid-gap: 20px;
+    margin: 0;
+    margin-top: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 100px;
+}
+
+.blog-item {
+    background-color: var(--theme1-b-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.blog-item a {
+    font-size: 2rem;
+    color: white;
+}
+
+.blog-item a:hover {
+    color: var(--theme1-a-color);
+}
+
+
+/* 不同分辨率适配 375px~768px(默认)  768px~1200px  1200px~1920px*/
+
+
+/* 大于768px时 */
+
+@media screen and (min-width: 768px) {
+    .menu {
+        display: none;
+    }
+    .menu-fold {
+        display: block;
+        flex: 1;
+        position: static;
+        width: 100%;
+        height: 100%;
+        padding-top: 30px;
+        background-color: var(--theme1-a-color);
+        border-top: 0px;
+    }
+    .menu-fold ul {
+        display: flex;
+        justify-content: flex-start;
+    }
+    .menu-item {
+        align-items: center;
+        font-size: 0.8rem;
+        font-weight: bold;
+        line-height: 20px;
+        color: #6e6d7a;
+        padding: 0 10px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    nav {
+        position: fixed;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30%;
+        max-width: 320px;
+        height: 100%;
+        padding-top: 50px;
+        background-color: var(--theme1-a-color);
+        z-index: 2;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    main {
+        padding: 80px 20px;
+        padding-left: 350px;
+        padding-bottom: 100px;
+    }
+    .author {
+        font-size: 1rem;
+    }
+    .menu-fold {
+        background-color: var(--theme1-a-color);
+    }
+    .menu-fold ul {
+        flex-direction: column;
+    }
+    .menu-item {
+        font-size: 1rem;
+        padding: 20px;
+    }
+    footer {
+        display: none;
+    }
+    .footer {
+        display: flex;
+        background-color: var(--theme1-a-color);
+    }
+}
