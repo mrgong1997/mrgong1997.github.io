@@ -1,0 +1,211 @@
+:root {
+    --default-color: blue;
+    --spring-color: rgb(49, 194, 124);
+    --summer-color: #1E705D;
+    --autumn-color: orange;
+    --winter-color: aqua;
+    --text-color: #333;
+    --a-color: #999;
+    --theme1-a-color: rgba(30, 112, 93);
+    --theme1-b-color: #F7B1A4;
+    --theme1-c-color: #F0816D;
+    --theme1-d-color: #D9E4B0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--theme1-d-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-shadow: 0 35px 55px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    min-height: 1000px;
+    background-color: #fff;
+    margin: 50px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.container .leftSide {
+    position: relative;
+    background-color: var(--theme1-a-color);
+    padding: 40px;
+}
+
+.profile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.profile h2 {
+    color: #fff;
+    font-size: 1em;
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.4em;
+}
+
+.profile h2 span {
+    font-size: 0.8em;
+    font-weight: 300;
+}
+
+.contactInfo {
+    padding-top: 40px;
+}
+
+.contactInfo .title {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.contactInfo ul {
+    position: relative;
+}
+
+.contactInfo ul li {
+    position: relative;
+    list-style: none;
+    margin: 10px 0;
+}
+
+.contactInfo ul li .material-icons {
+    display: inline-block;
+    font-size: 18px;
+    color: pink;
+}
+
+.contactInfo ul li .text {
+    color: #fff;
+}
+
+.contactInfo ul li a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.contactInfo.education li {
+    margin-bottom: 15px;
+}
+
+.contactInfo.education h5 {
+    color: pink;
+}
+
+.contactInfo.education h4 {
+    color: white;
+}
+
+.container .rightSide {
+    position: relative;
+    background-color: white;
+    padding: 40px;
+}
+
+.about {
+    margin-bottom: 20px;
+}
+
+.about:last-child {
+    margin-bottom: 0;
+}
+
+.title2 {
+    color: var(--theme1-a-color);
+    margin-bottom: 10px;
+}
+
+p {
+    color: #333;
+}
+
+.about .box {
+    display: flex;
+    margin: 20px 0;
+}
+
+.about .box .year-company {
+    min-width: 150px;
+}
+
+.about .box h5 {
+    color: darkgray;
+}
+
+.exp h5:first-child {
+    padding-bottom: 20px;
+}
+
+.about .box .text h4 {
+    color: #F7B1A4;
+    ;
+    font-size: 16px;
+}
+
+.about li {
+    padding: 8px 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.skills .box {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.project h4 {
+    padding-left: 100px;
+}
+
+.project h5 {
+    padding-left: 30px;
+    min-width: 100px;
+    text-align: right;
+}
+
+@media (max-width:1000px) {
+    .container {
+        margin: 10px;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (max-width:600px) {
+    .about .box {
+        flex-direction: column;
+    }
+    .about .box .year-company {
+        margin-bottom: 5px;
+    }
+    .skills .box {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
