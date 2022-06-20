@@ -4,8 +4,8 @@
 * **CSS**
   * [**CSS 基础**](docs/2_1_CSS_base)
   * [**页面布局**](docs/2_2_CSS_layout)
-  * [**定位与浮动**](docs/2_1_CSS_base)
-  * [**场景应用**](docs/2_1_CSS_base)
+  * [**定位与浮动**](docs/2_3_CSS_position)
+  * [**场景应用**](docs/2_4_CSS_application)
 * **Javascript**
   * [**数据类型**](docs/3_1_JS_dataType)
   * [**JS 基础**](docs/3_1_JS_dataType)

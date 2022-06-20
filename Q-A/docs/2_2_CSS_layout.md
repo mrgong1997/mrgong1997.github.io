@@ -271,8 +271,32 @@
 
 ---
 
+### 5.对 flex 布局的理解
 
+---
 
+#### Answer：
+
+##### 父元素属性：通过设置父元素属性来控制子元素排列
+
+- **flex-direction**  
+主轴方向(按行排列还是按列排)
+- **justify-content**  
+子元素在主轴上的排列方式    
+flex-start（从头排列）/ center（主轴上居中对齐）/ space-around（均匀分布）/ space-between（先两边再均匀分布）  
+- **align-items**  
+单行子元素在测轴上的排列方式   
+flex-start（从头排列）/ center（测轴上居中对齐）/ stretch（默认值，拉伸，但若子元素设置了高度则不会拉伸）  
+- **flex-wrap**  
+是否换行,默认不换行,一条主轴排下去，且子元素宽度被挤小  
+- **align-content**  
+多行（单行下设置这个没用）子元素在测轴的排列方式  
+flex-start（从头排列） / center（测轴上居中对齐） / stretch（拉伸）/ space-around（均匀分布）/ space-between（先两边后均匀分布）  
+
+##### 子元素属性：
+- **flex**  （三个属性的缩写）   
+flex-grow / flex-shrink / flex-basis:  0  1  auto（默认）   
+< 占剩余空间的份数，占亏损空间的份数，占主轴空间大小（以此计算剩余空间）>
 
 
 
