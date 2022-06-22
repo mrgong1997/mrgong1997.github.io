@@ -279,24 +279,45 @@
 
 ##### 父元素属性：通过设置父元素属性来控制子元素排列
 
-- **flex-direction**  
-主轴方向(按行排列还是按列排)
-- **justify-content**  
-子元素在主轴上的排列方式    
-flex-start（从头排列）/ center（主轴上居中对齐）/ space-around（均匀分布）/ space-between（先两边再均匀分布）  
-- **align-items**  
-单行子元素在测轴上的排列方式   
+- **flex-direction**：主轴方向(按行排列还是按列排)  
+- **justify-content**：子元素在主轴上的排列方式  
+ flex-start（从头排列）/ center（主轴上居中对齐）/ space-around（均匀分布）/ space-between（先两边再均匀分布）  
+- **align-items**：单行子元素在测轴上的排列方式     
 flex-start（从头排列）/ center（测轴上居中对齐）/ stretch（默认值，拉伸，但若子元素设置了高度则不会拉伸）  
-- **flex-wrap**  
-是否换行,默认不换行,一条主轴排下去，且子元素宽度被挤小  
-- **align-content**  
-多行（单行下设置这个没用）子元素在测轴的排列方式  
+- **flex-wrap**：是否换行  
+默认不换行,一条主轴排下去，且子元素宽度被挤小  
+- **align-content**：多行（单行下设置这个没用）子元素在测轴的排列方式  
 flex-start（从头排列） / center（测轴上居中对齐） / stretch（拉伸）/ space-around（均匀分布）/ space-between（先两边后均匀分布）  
 
 ##### 子元素属性：
 - **flex**  （三个属性的缩写）   
 flex-grow / flex-shrink / flex-basis:  0  1  auto（默认）   
 < 占剩余空间的份数，占亏损空间的份数，占主轴空间大小（以此计算剩余空间）>
+
+---
+
+### 6.对 grid 布局的理解
+
+---
+
+#### Answer：
+
+##### 父元素属性：通过设置父元素属性来控制子元素排列
+
+- **grid-template-columns**：设置每一列宽度    
+如：200px 200px 200px （代表三列，每列 200px）  
+简写 repeat(3, 200px)（参数分别代表 重复次数 和 重复值 ）  
+<响应式布局常见写法>：repeat(auto-fill, minmax(200px, 1fr))（子元素宽度最小 200px，最大占整个父元素，重复次数看父元素最多能容纳几个最小宽度，剩下空间均分）    
+<固定端布局常见写法>：repeat(3, 1fr)（重复三列，每列 1/3）  
+- **grid-template-rows**：设置每一行宽度
+（写法同上）  
+- **grid-gap**：（两个属性的缩写）设置行间距与列间距  
+grid-row-gap / grid-column-gap   
+如 10px 20px 或者 10px（行列都为 10px）
+- **grid-auto-flow**：子元素按行还是列排  
+默认 row  
+- **grid-auto-rows/grid-auto-colmuns**：隐式网格（超出网格的元素）宽高  
+（写法同 grid-template-columns/rows）  
 
 
 
