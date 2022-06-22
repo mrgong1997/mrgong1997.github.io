@@ -19,7 +19,7 @@
   * [**环形链表II**](docs/2_8_LinkList_cycleLinkList)
   * [**总结**](docs/2_9_Linklist_summary)
 * **哈希表**
-  * [**哈希表理论基础**](docs/3_hash)
+  * [**哈希表理论基础**](docs/3_1_Hashtable_hashtableBase)
   * [**有效的字母异位词**](docs/3_hash)
   * [**两个数组的交集**](docs/3_hash)
   * [**快乐数**](docs/3_hash)
