@@ -13,14 +13,33 @@ Array：
 - arrary.reverse() ：反转数组 
 - const arr = new Array(3).fill(0):定义并初始化3行的全为0的一维数组
 - const arr = new Array(5).fill(0).map(v => new Array(3).fill(0))：定义并初始化5行3列的全为0的二维数组 
+- Array.from(Object)：通过给定对象创建一个数组 （如 Array.from(set)）
+
+Set：
+- set.has(ele): 集合是否存在该元素
 
 Number：
-- Math.floor():向左取整  
+- Math.floor():向下取整  
 
 String：
-- string1.include(string2)；字符串1是否包含字符串2，返回 bool 类型
-- string.replace("a","b"):把字符串的第一个字符`a`替换成`b`
+- string1.include(string2): 字符串1是否包含字符串2，返回 bool 类型
+- string.replace("a","b"): 把字符串的第一个字符`a`替换成`b`
+- string.charCodeAt(index): 获得对应索引字符的 Unicode 编码
 
+Other：
+- 短路求值   
+&&
+```JavaScript
+if(value) isTrue();
+//等价于
+value && isTrue();
+```
+||
+```JavaScript
+if(!value) isFalse();
+//等价于
+value || isFalse();
+```
 #### 3.Thinking
 
 - 算法中写循环时，多关注起点和终点，以及递进的操作，多用**左闭右开**的原则

@@ -47,7 +47,7 @@
   * [**规范化**](docs/7_1_Engineering_git)
   * [**自动化**](docs/7_1_Engineering_git)
 * **性能优化**
-  * [**回流与重绘**](docs/8_1_Optimization_reflowRedraw)
+  * [**重绘与重排**](docs/8_1_Optimization_reflowRedraw)
   * [**节流与防抖**](docs/8_1_Optimization_reflowRedraw)
   * [**懒加载**](docs/8_1_Optimization_reflowRedraw)
   * [**CDN**](docs/8_1_Optimization_reflowRedraw)
