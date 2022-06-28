@@ -37,9 +37,9 @@
 - -2的28次方 <= nums1[i], nums2[i], nums3[i], nums4[i] <= 2的28次方
 
 #### 思路：
-遍历该数组来创建元素为 {数值(key):下标(value)} 的 map   
-如果 map 中已存在配对的元素（target-nums[i]），则返回结果；  
-没有配对元素就将该元素加入 map
+四个数组，A、B为一组，C、D为一组，通过 a+b=-(c+d) 恒成立来解决      
+扫描A、B数组，统计元素的和 a+b 为 key，该和出现的次数为 value，存入 map  
+扫描C、D数组，统计元素的和 -(c+d) 是否出现在 map 中，出现一次 count+value  
 
 #### 解法：
 
@@ -53,22 +53,33 @@
 
 ```javascript
 /**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @param {number[]} nums3
+ * @param {number[]} nums4
+ * @return {number}
  */
-var twoSum = function(nums, target) {
-    // map键值对{数值:下标}
-    let map = {};
-    for(let i = 0;i < nums.length;i++){
-        //这里先判断有没有配对元素，没有再加入 map
-        //防止可能将当前元素作为配对元素
-        if(map[target-nums[i]]!=undefined){
-            return [i,map[target-nums[i]]];
+var fourSumCount = function(nums1, nums2, nums3, nums4) {
+    let map = new Map();
+    let count = 0;
+    //把A/B数组的元素和及该和出现次数放进 map
+    for(const a of nums1){
+        for(const b of nums2){
+            const sum = a + b;
+            map.set(sum,(map.get(sum)||0) + 1);
         }
-        map[nums[i]] = i;
     }
-    return [];
+    //扫描 C/D数组，看map中是否存在-(c+d)的key，有就把这个value加上
+    for(const c of nums3){
+        for(const d of nums4){
+            const sum = c + d;
+            if(map.has(0-sum)){
+                count += map.get(0-sum);
+            }
+            
+        }
+    }
+    return count;
 };
 ```
 

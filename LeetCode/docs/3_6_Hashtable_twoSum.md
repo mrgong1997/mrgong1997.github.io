@@ -34,8 +34,8 @@
 进阶：你可以想出一个时间复杂度小于 O(n2) 的算法吗？
 
 #### 思路：
-遍历该数组来创建元素为 {数值(key):下标(value)} 的 map   
-如果 map 中已存在配对的元素（target-nums[i]），则返回结果；  
+创建一个 map 分别存放数组的`值`和`下标`  
+扫描数组，如果 map 中已存在配对的元素（target-nums[i]），则返回结果；  
 没有配对元素就将该元素加入 map
 
 #### 解法：
@@ -55,15 +55,15 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-    // map键值对{数值:下标}
-    let map = {};
+    // 键值对形式{数值:下标}
+    let map = new Map();
     for(let i = 0;i < nums.length;i++){
         //这里先判断有没有配对元素，没有再加入 map
         //防止可能将当前元素作为配对元素
-        if(map[target-nums[i]]!=undefined){
-            return [i,map[target-nums[i]]];
+        if(map.has(target-nums[i])){
+            return [i,map.get(target-nums[i])];
         }
-        map[nums[i]] = i;
+        map.set(nums[i],i);
     }
     return [];
 };

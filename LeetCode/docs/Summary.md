@@ -16,7 +16,15 @@ Array：
 - Array.from(Object)：通过给定对象创建一个数组 （如 Array.from(set)）
 
 Set：
+- let set = new Set(arr)：数组快速去重
+- set.add(ele)：向集合中加入一个元素，若已存在则不添加
 - set.has(ele): 集合是否存在该元素
+
+Map:
+- let map = new Map()：创建一个 Map 对象
+- map.set(key,value)：设置键值对值
+- map.get(key)：由 key 得到对应 value
+- map.has(key)：判定是否存在某个 key
 
 Number：
 - Math.floor():向下取整  
