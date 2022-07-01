@@ -156,10 +156,120 @@ null === undefined;       //false
 
 #### Answer：
 
+显式转换：  
+- 场景：需要人工进行强制类型转换的情况。  
+- 常见方法：  
+String() Boolean() Number() parseInt()（遇到不能转换的字符会停止解析）   
 
+隐式转换：  
+
+- 场景：  
+比较运算（`==` `<` `>` 等）以及需要布尔值的地方（`if` `while` 等）  
+算数运算（`+` `-` `*` 等）
+- 转换规则：  
+需要转换成对应类型的地方会自动转换成对应类型，如：  
+在 `+` 运算中，一边存在字符串就会都转化成`字符串`进行拼接；而`其他运算`都会自动转化为`数值`进行运算
+
+---
+### 8. 谈谈浅拷贝和深拷贝？
 
 ---
 
+#### Answer：
+简介：  
+原始数据类型赋值都会在栈中创建新的空间，因此不存在深浅拷贝；  
+**只有引用数据类型中才区分深浅拷贝**。浅拷贝只复制内存地址并且只复制第一层属性，修改新对象改变原对象；深拷贝则会在堆中创建新的对象并且递归进行复制，同时两个对象之间修改互不影响。  
+
+浅拷贝常用方法：**赋值**、**Object.assign**、**扩展运算符(...)** 、**数组的拷贝方法**    
+- 赋值  
+```JavaScript
+let a = {alice:{name:"alice"}};
+let b = a;
+b.alice.age = 18;
+console.log(a,b);
+//{alice: {name: 'alice', age: 18}}
+//{alice: {name: 'alice', age: 18}}
+```
+
+- Object.assign()
+```JavaScript
+let a = {alice:{name:"alice"}};
+let b = Object.assign({},a);
+b.alice.age = 18;
+console.log(a,b);
+//{alice: {name: 'alice', age: 18}}
+//{alice: {name: 'alice', age: 18}}
+```
+
+- 扩展运算符 (...)
+```JavaScript
+let a = {alice:{name:"alice"}};
+let b = {...a};
+b.alice.age = 18;
+console.log(a,b);
+//{alice: {name: 'alice', age: 18}}
+//{alice: {name: 'alice', age: 18}}
+```
+
+- 数组的拷贝方法
+```JavaScript
+//1.array.slice(startIndex,endIndex)
+let a = [{alice:{name:"alice"}},1];
+let b = a.slice()
+b[0].alice.age = 18;
+console.log(a,b);
+//{alice: {name: 'alice', age: 18}}
+//{alice: {name: 'alice', age: 18}}
+//*******************************************
+//2.array1.concat(array2)
+let a = [{alice:{name:"alice"}},1];
+let b = [].concat(a)
+b[0].alice.age = 18;
+console.log(a,b);
+//{alice: {name: 'alice', age: 18}}
+//{alice: {name: 'alice', age: 18}}
+//*******************************************
+//3.Array.from(array)
+let a = [{alice:{name:"alice"}},1];
+let b = Array.from(a)
+b[0].alice.age = 18;
+console.log(a,b);
+//{alice: {name: 'alice', age: 18}}
+//{alice: {name: 'alice', age: 18}}
+```
+
+深拷贝常用方法：JSON.parse(JSON.stringify()) 、手写实现  
+- JSON.parse(JSON.stringify())   
+```JavaScript
+let a = [{alice:{name:"alice"}},1];
+let b = JSON.parse(JSON.stringify(a));
+b[0].alice.age = 18;
+console.log(a,b);
+```
+
+- 手写实现  
+```JavaScript
+function deepClone(obj) {
+    let objClone = Array.isArray(obj) ? [] : {};
+    if (obj && typeof obj == "object") {
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                if (obj[key] && typeof obj[key] == "object") {
+                    objClone[key] = deepClone(obj[key]);
+                } else {
+                    objClone[key] = obj[key]
+                }
+            }
+        }
+    }
+    return objClone;
+}
+let arr1 = [{alice:{name:"alice"}},1]
+let arr2 = deepClone(arr1)
+arr2[0].alice.age = 18;
+console.log(arr1,arr2);
+```
+---
 
 
 
