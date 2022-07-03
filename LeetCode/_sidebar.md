@@ -28,7 +28,7 @@
   * [**四数相加II**](docs/3_7_Hashtable_fourSumII)
   * [**总结**](docs/3_8_HashTable_summary)
 * **字符串**
-  * [**反转字符串**](docs/4_string)
+  * [**反转字符串**](docs/4_1_String_reverse)
   * [**反转字符串II**](docs/4_string)
   * [**替换空格**](docs/4_string)
   * [**翻转单词**](docs/4_string)
