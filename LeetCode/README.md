@@ -1,6 +1,6 @@
 # Overview
 
-> 该文档用于记录刷LeetCode总结的问题,在线访问地址：http://mrgong.tech/LeetCode/#/
+> 该文档用于记录刷LeetCode总结的问题,在线访问地址：https://mrgong1997.github.io/LeetCode/#/
 
 ## 一.说明
 

@@ -1,6 +1,6 @@
 # Overview
 
-> 该文档用于记录前端常见问题,在线访问地址：http://mrgong.tech/Q&A/#/
+> 该文档用于记录前端常见问题,在线访问地址：https://mrgong1997.github.io/Q-A/#/
 
 ## 一.说明
 
