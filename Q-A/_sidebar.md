@@ -8,7 +8,7 @@
   * [**场景应用**](docs/2_4_CSS_application)
 * **Javascript**
   * [**数据类型**](docs/3_1_JS_dataType)
-  * [**JS 基础**](docs/3_1_JS_dataType)
+  * [**JS 基础**](docs/3_2_JS_base)
   * [**ES6**](docs/3_1_JS_dataType)
   * [**异步**](docs/3_1_JS_dataType)
   * [**原型和原型链**](docs/3_1_JS_dataType)

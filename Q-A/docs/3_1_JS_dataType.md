@@ -270,6 +270,36 @@ arr2[0].alice.age = 18;
 console.log(arr1,arr2);
 ```
 ---
+### 9.如何判断一个对象是空对象？
+
+---
+
+#### Answer：
+1. JSON.stringify() （JSON 自带的 stringify 方法来判断是否为 {}）
+```JavaScript
+let obj={};
+console.log(JSON.stringify(obj)==="{}");
+```
+
+2. Object.keys() （返回对象的属性名组成的数组长度是否为 0）
+```JavaScript
+let obj={};
+console.log(Object.keys(obj).length==0);
+```
+
+3. 使用 for in 遍历对象 （若可遍历则不为空）
+```JavaScript
+let obj={};
+let isNull=function(obj){
+    for(let key in obj){
+        return false;
+    }
+    return true;
+}
+console.log(isNull(obj));
+```
+
+---
 
 
 
