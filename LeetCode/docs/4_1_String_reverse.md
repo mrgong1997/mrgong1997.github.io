@@ -43,11 +43,11 @@
 
 ```javascript
 /**
- * @param {character[]} s
- * @return {void} Do not return anything, modify s in-place instead.
+ * @param {string} s
+ * @param {number} k
+ * @return {string}
  */
-var reverseString = function(s) {
-    let left = 0,right = s.length-1;
+var reverse = function(s,left,right) {
     while(left<right){
         //使用解构赋值交换变量，不用定义 temp
         [s[left],s[right]] = [s[right],s[left]]
@@ -55,6 +55,18 @@ var reverseString = function(s) {
         right--;
     }
     return s;
+};
+var reverseStr = function(s, k) {
+    let length = s.length-1;
+    let strArr = s.split("");
+    //每2k个元素中翻转前k个元素，剩余的数组如果(扫描位置+k)大于len则全部翻转
+    for(let i = 0;i<s.length;i+=2*k){
+        let start = i;
+        let end = (i + k -1)< s.length ? (i+k-1) :length;
+        console.log(start,end)
+        reverse(strArr,start,end);
+    }
+    return strArr.join("");
 };
 ```
 
