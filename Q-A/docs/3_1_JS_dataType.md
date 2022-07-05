@@ -157,7 +157,7 @@ null === undefined;       //false
 #### Answer：
 
 显式转换：  
-- 场景：需要人工进行强制类型转换的情况。  
+- 场景：需要人工进行强制类型转换的情况，转化成的都是原始类型。  
 - 常见方法：  
 String() Boolean() Number() parseInt()（遇到不能转换的字符会停止解析）   
 
