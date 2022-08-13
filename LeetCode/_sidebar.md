@@ -62,4 +62,5 @@
 * [**回溯算法**](docs/backtracking)
 * [**贪心算法**](docs/greedy)
 * [**动态规划**](docs/dynamicProgramming)
-* [**其他**](docs/other)
+* **其他**
+  * [**字节校园·单月模拟笔试 8月场排名赛**](docs/0_other_8mockexam)
