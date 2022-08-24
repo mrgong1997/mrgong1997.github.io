@@ -46,6 +46,7 @@
   * [**模块化**](docs/7_1_Engineering_git)
   * [**规范化**](docs/7_1_Engineering_git)
   * [**自动化**](docs/7_1_Engineering_git)
+  * [**部署**](docs/7_6_deployment_bt)
 * **性能优化**
   * [**重绘与重排**](docs/8_1_Optimization_reflowRedraw)
   * [**节流与防抖**](docs/8_1_Optimization_reflowRedraw)
