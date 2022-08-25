@@ -34,20 +34,50 @@ function mynew(Func, ...args) {
 ---
 
 #### Answer：   
+        
+##### 改变原数组的方法：        
 - 尾部操作：pop()、push() [...arr,item] 
 - 首部操作：shift()、unshift() [item,...arr]  
-- 连接数组：concat()            <不影响原数组>
-- 截取数组：slice(start,end)    <不影响原数组>
 - 插入元素：splice()  
 - 转字符串：toString()、join()  
 - 重排序：reverse()、sort()  
+- 归并方法：  
+a.reduce(func) （从左至右根据函数累加）  
+a.reduceRight(func) （从右至左根据函数累加）   
+##### 不改变原数组的方法：       
+- 连接数组：concat()            
+- 截取数组：slice(start,end) 
 - 迭代方法：  
 a.map(func)（返回一个经函数处理的新数组）  
 a.filter(func) （过滤出满足条件的元素）  
 a.every(func) （检测数组元素是否都满足条件）  
 a.some(func) （检测是否有一个满足条件的元素）  
+  
+---
+
+
+### 3. 什么是 DOM 和 BOM ？
+
+---
+
+#### Answer：   
+        
+##### 改变原数组的方法：        
+- 尾部操作：pop()、push() [...arr,item] 
+- 首部操作：shift()、unshift() [item,...arr]  
+- 插入元素：splice()  
+- 转字符串：toString()、join()  
+- 重排序：reverse()、sort()  
 - 归并方法：  
 a.reduce(func) （从左至右根据函数累加）  
-a.reduceRight(func) （从右至左根据函数累加）  
-
+a.reduceRight(func) （从右至左根据函数累加）     
+##### 不改变原数组的方法：       
+- 连接数组：a1.concat(a2)            
+- 截取数组：a.slice(start,end) 
+- 迭代方法：  
+a.map(func)（返回一个经函数处理的新数组）  
+a.filter(func) （过滤出满足条件的元素）  
+a.every(func) （检测数组元素是否都满足条件）  
+a.some(func) （检测是否有一个满足条件的元素）  
+  
 ---

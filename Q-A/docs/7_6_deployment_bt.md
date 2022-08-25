@@ -36,12 +36,16 @@
 - 将项目进行打包部署。在项目根目录下执行 `npm run build`，在服务器中新建目录（如 `feed-front`），然后将 `build` 目录的所有文件拷贝至该目录中。   
         
 ![folder-front](imgs/deployment/folder-front.png)  
-         
+                   
+- （如果想通过域名访问，可以在阿里云控制台域名解析中添加子域名，如图）   
+          
+![dns](imgs/deployment/dns.png) 
+
 - 在`宝塔面板-网站`中按照以下方式添加 PHP 项目：   
       
 ![createSite](imgs/deployment/createSite.png)    
 
-- 点击`设置-域名管理`，添加 `IP:PORT` 后，删除原来的域名        
+- 点击`设置-域名管理`，添加 `IP:PORT` 后，删除原来的域名（若上一步配置的是自己的子域名，该步请忽略）        
         
 ![domain](imgs/deployment/domain.png)   
        
@@ -61,7 +65,7 @@ location / {
           
 ![config](imgs/deployment/config.png)      
        
-- 至此，项目已经可以通过地址 `IP:PORT` 访问了                 
+- 至此，项目已经可以通过地址 `IP:PORT`或者子域名的方式访问了                 
                   
 ![show](imgs/deployment/show.png) 
  
