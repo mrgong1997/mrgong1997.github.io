@@ -61,7 +61,7 @@ body {
 
 .profile h2 {
     color: #fff;
-    font-size: 1em;
+    font-size: 2em;
     margin-top: 20px;
     text-transform: uppercase;
     text-align: center;
@@ -70,7 +70,7 @@ body {
 }
 
 .profile h2 span {
-    font-size: 0.8em;
+    font-size: 0.5em;
     font-weight: 300;
 }
 
@@ -208,4 +208,19 @@ p {
     .skills .box {
         grid-template-columns: repeat(1, 1fr);
     }
+}
+.strong{
+    font-weight: bold;
+}
+.comp{
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+.time{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
 }
