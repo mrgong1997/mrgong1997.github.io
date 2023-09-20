@@ -1,11 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>啧啧啧</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      height: 100vh;
+      background-color: white;
+    }
+
+    .text-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .text-container:nth-child(1) {
+      background-color: white;
+      color: red;
+    }
+
+    .text-container:nth-child(2) {
+      background-color: white;
+      color: green;
+      animation: move-horizontally 3s infinite alternate;
+    }
+
+    .text-container:nth-child(3) {
+      background-color: white;
+      color: blue;
+      animation: move-vertically 3s infinite alternate;
+    }
+
+    .text-container:nth-child(4) {
+      margin-top: 300px;
+      background-color: white;
+      color: purple;
+      animation: rotate 3s infinite linear;
+      z-index: -1;
+    }
+
+    @keyframes move-horizontally {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(100px); }
+    }
+
+    @keyframes move-vertically {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100px); }
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-  <center> <h1>不会有人还有早八吧</h1></center>
+  <div class="text-container">不会有人还有早八吧？</div>
+  <div class="text-container">不会吧？不会吧？</div>
+  <div class="text-container">不会有人还要上课吧？</div>
+  <div class="text-container">应该不会吧？</div>
 </body>
 </html>
