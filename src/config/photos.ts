@@ -1,0 +1,193 @@
+// 初始示例数据：当你把真实照片放入 public/photos/ 并运行 `npm run photos`，
+// 此文件会被 scripts/sync-photos.js 自动重新生成（你手动编辑过的 alt 和 tags 会被保留）。
+import type { PhotoConfig } from '@/types/photo';
+
+export const photos: PhotoConfig[] = [
+  {
+    id: 'sample-city-dawn',
+    src: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=75',
+    alt: '黎明中的山脉',
+    tags: ['风景', '自然', 'featured'],
+    width: 2000,
+    height: 1333,
+    exif: {
+      make: 'SONY',
+      model: 'ILCE-7CM2',
+      lens: 'FE 24-70mm F2.8 GM II',
+      focalLength: '35mm',
+      aperture: 'f/4',
+      shutterSpeed: '1/200',
+      iso: 100,
+      date: '2025-07-12',
+    },
+  },
+  {
+    id: 'sample-street-rain',
+    src: 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=1200&q=75',
+    alt: '雨夜的街角霓虹',
+    tags: ['城市', '街头', 'featured'],
+    width: 2000,
+    height: 3000,
+    exif: {
+      make: 'FUJIFILM',
+      model: 'X-T5',
+      lens: 'XF 35mm F1.4 R',
+      focalLength: '35mm',
+      aperture: 'f/1.8',
+      shutterSpeed: '1/125',
+      iso: 800,
+      date: '2025-06-03',
+    },
+  },
+  {
+    id: 'sample-portrait-sun',
+    src: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=75',
+    alt: '逆光中的侧脸',
+    tags: ['人像', 'featured'],
+    width: 2000,
+    height: 2500,
+    exif: {
+      make: 'SONY',
+      model: 'ILCE-7CM2',
+      lens: 'FE 85mm F1.4 GM',
+      focalLength: '85mm',
+      aperture: 'f/1.8',
+      shutterSpeed: '1/800',
+      iso: 200,
+      date: '2025-05-20',
+    },
+  },
+  {
+    id: 'sample-architecture',
+    src: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1200&q=75',
+    alt: '几何的天际线',
+    tags: ['建筑', '城市'],
+    width: 2000,
+    height: 1333,
+    exif: {
+      make: 'Canon',
+      model: 'EOS R6',
+      lens: 'RF 24-105mm F4 L IS USM',
+      focalLength: '50mm',
+      aperture: 'f/8',
+      shutterSpeed: '1/400',
+      iso: 100,
+      date: '2025-04-18',
+    },
+  },
+  {
+    id: 'sample-mountain-fog',
+    src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=75',
+    alt: '雾中山脊',
+    tags: ['风景', '自然'],
+    width: 2000,
+    height: 1250,
+    exif: {
+      make: 'Nikon',
+      model: 'Z7 II',
+      lens: 'Z 70-200mm f/2.8 VR S',
+      focalLength: '120mm',
+      aperture: 'f/5.6',
+      shutterSpeed: '1/320',
+      iso: 200,
+      date: '2025-03-22',
+    },
+  },
+  {
+    id: 'sample-ocean-pier',
+    src: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=1200&q=75',
+    alt: '海与栈桥',
+    tags: ['风景', '自然'],
+    width: 2000,
+    height: 1333,
+    exif: {
+      make: 'SONY',
+      model: 'ILCE-7CM2',
+      lens: 'FE 16-35mm F2.8 GM II',
+      focalLength: '24mm',
+      aperture: 'f/11',
+      shutterSpeed: '1/250',
+      iso: 100,
+      date: '2025-02-14',
+    },
+  },
+  {
+    id: 'sample-abstract-light',
+    src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=75',
+    alt: '银河与山',
+    tags: ['风景', '抽象'],
+    width: 2000,
+    height: 1333,
+    exif: {
+      make: 'SONY',
+      model: 'ILCE-7CM2',
+      lens: 'FE 14mm F1.8 GM',
+      focalLength: '14mm',
+      aperture: 'f/1.8',
+      shutterSpeed: '20s',
+      iso: 3200,
+      date: '2025-01-30',
+    },
+  },
+  {
+    id: 'sample-street-crossing',
+    src: 'https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=1200&q=75',
+    alt: '穿越街口',
+    tags: ['城市', '街头', '黑白'],
+    width: 2000,
+    height: 1333,
+    exif: {
+      make: 'Leica',
+      model: 'Q2 Monochrom',
+      lens: 'Summilux 28mm f/1.7 ASPH.',
+      focalLength: '28mm',
+      aperture: 'f/4',
+      shutterSpeed: '1/500',
+      iso: 400,
+      date: '2024-12-10',
+    },
+  },
+  {
+    id: 'sample-portrait-cafe',
+    src: 'https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=2000&q=85',
+    thumbnail:
+      'https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=1200&q=75',
+    alt: '咖啡馆的午后',
+    tags: ['人像'],
+    width: 2000,
+    height: 2500,
+    exif: {
+      make: 'FUJIFILM',
+      model: 'X-T5',
+      lens: 'XF 56mm F1.2 R WR',
+      focalLength: '56mm',
+      aperture: 'f/1.4',
+      shutterSpeed: '1/200',
+      iso: 400,
+      date: '2024-11-05',
+    },
+  },
+];
+
+export const categories: string[] = [
+  '全部',
+  ...Array.from(
+    new Set(photos.flatMap((p) => p.tags ?? []).filter((t) => t !== 'featured')),
+  ),
+];
