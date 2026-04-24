@@ -1,10 +1,11 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import { Box, IconButton, Modal, Stack, Typography, Button } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import ExifBar from './ExifBar';
 import type { PhotoConfig } from '@/types/photo';
 import { glassTokens } from '@/theme/theme';
+import { duration, ease } from '@/theme/motion';
 
 interface PhotoLightboxProps {
   open: boolean;
@@ -22,16 +23,38 @@ export default function PhotoLightbox({
   onIndexChange,
 }: PhotoLightboxProps) {
   const current = photos[index];
+  // 方向感：+1 = 往下一张（新图从右边进入），-1 = 上一张（新图从左边进入）
+  const [direction, setDirection] = useState(1);
+  const prevIndexRef = useRef(index);
+
+  useEffect(() => {
+    if (prevIndexRef.current !== index) {
+      // 处理循环边界，让 0 ↔ last 的过渡方向符合预期
+      const delta = index - prevIndexRef.current;
+      const len = photos.length;
+      if (delta === 1 || delta === -(len - 1)) setDirection(1);
+      else if (delta === -1 || delta === len - 1) setDirection(-1);
+      prevIndexRef.current = index;
+    }
+  }, [index, photos.length]);
 
   const goPrev = useCallback(() => {
     if (!photos.length) return;
+    setDirection(-1);
     onIndexChange((index - 1 + photos.length) % photos.length);
   }, [index, photos.length, onIndexChange]);
 
   const goNext = useCallback(() => {
     if (!photos.length) return;
+    setDirection(1);
     onIndexChange((index + 1) % photos.length);
   }, [index, photos.length, onIndexChange]);
+
+  const handleDragEnd = (_: unknown, info: PanInfo) => {
+    const threshold = 80;
+    if (info.offset.x > threshold || info.velocity.x > 500) goPrev();
+    else if (info.offset.x < -threshold || info.velocity.x < -500) goNext();
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -149,15 +172,36 @@ export default function PhotoLightbox({
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" custom={direction} initial={false}>
             <motion.img
               key={current.id}
               src={current.src}
               alt={current.alt}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.35 }}
+              custom={direction}
+              drag={photos.length > 1 ? 'x' : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              variants={{
+                enter: (dir: number) => ({
+                  opacity: 0,
+                  x: dir * 80,
+                  scale: 0.96,
+                }),
+                center: { opacity: 1, x: 0, scale: 1 },
+                exit: (dir: number) => ({
+                  opacity: 0,
+                  x: dir * -60,
+                  scale: 0.96,
+                }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                duration: duration.base,
+                ease: ease.entrance,
+              }}
               style={{
                 maxWidth: '100%',
                 maxHeight: '85vh',
@@ -165,12 +209,19 @@ export default function PhotoLightbox({
                 display: 'block',
                 borderRadius: 6,
                 boxShadow: '0 30px 80px rgba(0,0,0,0.5)',
+                cursor: photos.length > 1 ? 'grab' : 'default',
+                willChange: 'transform',
               }}
+              whileDrag={{ cursor: 'grabbing', scale: 0.98 }}
             />
           </AnimatePresence>
         </Box>
 
         <Box
+          component={motion.div}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: duration.slow, delay: 0.15, ease: ease.entrance }}
           onClick={(e) => e.stopPropagation()}
           sx={{
             width: '100%',

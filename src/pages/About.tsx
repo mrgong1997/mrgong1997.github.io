@@ -8,6 +8,7 @@ import PageTransition from '@/components/layout/PageTransition';
 import GlassCard from '@/components/ui/GlassCard';
 import { photos } from '@/config/photos';
 import { tokens } from '@/theme/theme';
+import { duration, ease, stagger } from '@/theme/motion';
 
 interface GearItem {
   label: string;
@@ -65,7 +66,7 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: duration.slower, ease: ease.entrance }}
           >
             <Typography
               sx={{
@@ -135,11 +136,25 @@ export default function About() {
                   initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.08 }}
+                  transition={{
+                    duration: duration.slow,
+                    delay: i * stagger.base,
+                    ease: ease.entrance,
+                  }}
                 >
-                  <GlassCard sx={{ p: 3 }}>
+                  <GlassCard
+                    interactive
+                    sx={{
+                      p: 3,
+                      '&:hover .principle-icon': {
+                        transform: 'rotate(-8deg) scale(1.1)',
+                        background: 'rgba(232,185,107,0.22)',
+                      },
+                    }}
+                  >
                     <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.25 }}>
                       <Box
+                        className="principle-icon"
                         sx={{
                           width: 32,
                           height: 32,
@@ -149,6 +164,9 @@ export default function About() {
                           justifyContent: 'center',
                           background: 'rgba(232,185,107,0.12)',
                           color: tokens.primary,
+                          transition:
+                            'transform 400ms cubic-bezier(0.34,1.4,0.64,1), background 400ms ease',
+                          willChange: 'transform',
                         }}
                       >
                         {p.icon}

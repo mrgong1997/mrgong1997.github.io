@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { HelmetProvider } from 'react-helmet-async';
+import { MotionConfig } from 'framer-motion';
 
 import App from './App';
 import { theme } from './theme/theme';
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       >
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <App />
+          <MotionConfig reducedMotion="user">
+            <App />
+          </MotionConfig>
         </ThemeProvider>
       </BrowserRouter>
     </HelmetProvider>

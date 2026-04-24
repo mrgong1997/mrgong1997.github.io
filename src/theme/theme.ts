@@ -81,6 +81,22 @@ export const theme = createTheme({
           borderRadius: 999,
           paddingInline: 22,
           paddingBlock: 10,
+          transition:
+            'transform 200ms cubic-bezier(0.4,0,0.2,1), background 300ms ease, border-color 300ms ease, box-shadow 300ms ease',
+          willChange: 'transform',
+          '&:active': {
+            transform: 'scale(0.96)',
+          },
+          '&:focus-visible': {
+            outline: `2px solid ${alpha(PRIMARY, 0.7)}`,
+            outlineOffset: 3,
+          },
+        },
+        contained: {
+          boxShadow: `0 8px 24px ${alpha(PRIMARY, 0.25)}`,
+          '&:hover': {
+            boxShadow: `0 12px 32px ${alpha(PRIMARY, 0.38)}`,
+          },
         },
         outlined: {
           borderColor: glassTokens.borderStrong,
@@ -93,12 +109,40 @@ export const theme = createTheme({
         },
       },
     },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          transition:
+            'transform 180ms cubic-bezier(0.4,0,0.2,1), background 300ms ease, color 300ms ease',
+          willChange: 'transform',
+          '&:hover': {
+            transform: 'scale(1.06)',
+          },
+          '&:active': {
+            transform: 'scale(0.92)',
+          },
+          '&:focus-visible': {
+            outline: `2px solid ${alpha(PRIMARY, 0.7)}`,
+            outlineOffset: 2,
+          },
+        },
+      },
+    },
     MuiChip: {
       styleOverrides: {
         root: {
           backdropFilter: glassTokens.blur,
-          background: glassTokens.bg,
+          background: 'transparent',
           border: `1px solid ${glassTokens.border}`,
+          transition:
+            'background 300ms ease, color 300ms ease, border-color 300ms ease, box-shadow 300ms ease',
+          '&:active': {
+            transform: 'scale(0.96)',
+          },
+          '&:focus-visible': {
+            outline: 'none',
+            boxShadow: `0 0 0 3px ${alpha(PRIMARY, 0.28)}`,
+          },
         },
       },
     },
@@ -108,6 +152,11 @@ export const theme = createTheme({
           color: TEXT_SECONDARY,
           border: `1px solid ${glassTokens.border}`,
           textTransform: 'none',
+          transition:
+            'transform 200ms cubic-bezier(0.4,0,0.2,1), background 300ms ease, color 300ms ease, border-color 300ms ease',
+          '&:active': {
+            transform: 'scale(0.96)',
+          },
           '&.Mui-selected': {
             color: PRIMARY,
             background: alpha(PRIMARY, 0.08),
@@ -115,6 +164,18 @@ export const theme = createTheme({
             '&:hover': {
               background: alpha(PRIMARY, 0.14),
             },
+          },
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          transition:
+            'background 240ms ease, color 240ms ease, padding-left 240ms ease',
+          '&:hover': {
+            background: alpha('#ffffff', 0.04),
+            paddingLeft: 24,
           },
         },
       },

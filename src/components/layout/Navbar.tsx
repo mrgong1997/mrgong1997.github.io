@@ -11,8 +11,10 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { glassTokens, tokens } from '@/theme/theme';
+import { duration, ease, stagger } from '@/theme/motion';
 
 const NAV_ITEMS = [
   { label: '首页', path: '/' },
@@ -49,7 +51,8 @@ export default function Navbar() {
           borderBottom: `1px solid ${
             scrolled ? glassTokens.border : 'transparent'
           }`,
-          transition: 'all 400ms ease',
+          transition:
+            'background 400ms ease, border-color 400ms ease, min-height 400ms cubic-bezier(0.22,1,0.36,1)',
           zIndex: (t) => t.zIndex.appBar,
         }}
       >
@@ -59,7 +62,11 @@ export default function Navbar() {
             width: '100%',
             mx: 'auto',
             px: { xs: 2, md: 4 },
-            minHeight: { xs: 64, md: 76 },
+            minHeight: {
+              xs: scrolled ? 56 : 64,
+              md: scrolled ? 64 : 76,
+            },
+            transition: 'min-height 400ms cubic-bezier(0.22,1,0.36,1)',
             justifyContent: 'space-between',
           }}
         >
@@ -71,23 +78,35 @@ export default function Navbar() {
               alignItems: 'center',
               gap: 1.25,
               color: 'text.primary',
+              transition: 'opacity 200ms ease',
+              '&:hover .logo-dot': {
+                transform: 'scale(1.15)',
+                filter: 'brightness(1.25)',
+              },
+              '&:hover .logo-text': { letterSpacing: '0.17em' },
             }}
           >
             <Box
+              className="logo-dot"
               sx={{
                 width: 28,
                 height: 28,
                 borderRadius: '50%',
                 background: `radial-gradient(circle, ${tokens.primary} 0%, rgba(232,185,107,0.25) 55%, transparent 72%)`,
-                boxShadow: `0 0 22px ${tokens.primary}55`,
+                animation: 'softPulse 3.6s ease-in-out infinite',
+                transition:
+                  'transform 300ms cubic-bezier(0.22,1,0.36,1), filter 300ms ease',
+                willChange: 'transform',
               }}
             />
             <Box
+              className="logo-text"
               sx={{
                 fontFamily: '"Cormorant Garamond", serif',
                 fontSize: { xs: 20, md: 22 },
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
+                transition: 'letter-spacing 300ms ease',
               }}
             >
               Chasing Light
@@ -117,22 +136,37 @@ export default function Navbar() {
                       letterSpacing: '0.08em',
                       color: isActive ? tokens.primary : 'text.secondary',
                       position: 'relative',
-                      transition: 'color 300ms ease',
-                      '&:hover': { color: 'text.primary' },
-                      '&::after': {
-                        content: '""',
-                        position: 'absolute',
-                        left: '50%',
-                        bottom: 4,
-                        transform: 'translateX(-50%)',
-                        width: isActive ? '18px' : '0px',
-                        height: '1px',
-                        background: tokens.primary,
-                        transition: 'width 300ms ease',
+                      transition: 'color 300ms ease, transform 200ms ease',
+                      '&:hover': {
+                        color: isActive ? tokens.primary : 'text.primary',
                       },
+                      '&:active': { transform: 'scale(0.96)' },
                     }}
                   >
                     {item.label}
+                    {/* layoutId 让下划线在不同菜单项之间平滑滑动 */}
+                    {isActive && (
+                      <Box
+                        component={motion.span}
+                        layoutId="nav-underline"
+                        transition={{
+                          type: 'spring',
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                        sx={{
+                          position: 'absolute',
+                          left: '50%',
+                          bottom: 4,
+                          transform: 'translateX(-50%)',
+                          width: '18px',
+                          height: '1.5px',
+                          background: tokens.primary,
+                          borderRadius: 1,
+                          boxShadow: `0 0 8px ${tokens.primary}aa`,
+                        }}
+                      />
+                    )}
                   </Box>
                 )}
               </NavLink>
@@ -167,28 +201,63 @@ export default function Navbar() {
             <X size={20} />
           </IconButton>
         </Box>
-        <List>
-          {NAV_ITEMS.map((item) => (
-            <ListItem key={item.path} disablePadding>
-              <ListItemButton
-                component={NavLink}
-                to={item.path}
-                end={item.path === '/'}
-                sx={{
-                  py: 1.5,
-                  '&.active': { color: tokens.primary },
-                }}
-              >
-                <ListItemText
-                  primary={item.label}
-                  primaryTypographyProps={{
-                    sx: { fontSize: 18, letterSpacing: '0.08em' },
-                  }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <AnimatePresence>
+          {drawerOpen && (
+            <Box
+              component={motion.div}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: stagger.base,
+                    delayChildren: 0.08,
+                  },
+                },
+              }}
+            >
+              <List>
+                {NAV_ITEMS.map((item) => (
+                  <motion.div
+                    key={item.path}
+                    variants={{
+                      hidden: { opacity: 0, x: 20 },
+                      visible: {
+                        opacity: 1,
+                        x: 0,
+                        transition: {
+                          duration: duration.base,
+                          ease: ease.entrance,
+                        },
+                      },
+                    }}
+                  >
+                    <ListItem disablePadding>
+                      <ListItemButton
+                        component={NavLink}
+                        to={item.path}
+                        end={item.path === '/'}
+                        sx={{
+                          py: 1.5,
+                          '&.active': { color: tokens.primary },
+                        }}
+                      >
+                        <ListItemText
+                          primary={item.label}
+                          primaryTypographyProps={{
+                            sx: { fontSize: 18, letterSpacing: '0.08em' },
+                          }}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                  </motion.div>
+                ))}
+              </List>
+            </Box>
+          )}
+        </AnimatePresence>
       </Drawer>
     </>
   );

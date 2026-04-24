@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import BackgroundAurora from './components/ui/BackgroundAurora';
+import ScrollProgress from './components/ui/ScrollProgress';
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
 import About from './pages/About';
@@ -24,6 +25,7 @@ export default function App() {
       }}
     >
       <BackgroundAurora />
+      <ScrollProgress />
       <Navbar />
       <Box component="main" sx={{ flex: 1, position: 'relative', zIndex: 1 }}>
         <AnimatePresence mode="wait">

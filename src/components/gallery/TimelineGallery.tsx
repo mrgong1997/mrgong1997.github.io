@@ -5,6 +5,7 @@ import AutoImage from '@/components/ui/AutoImage';
 import ExifBar from './ExifBar';
 import type { PhotoConfig } from '@/types/photo';
 import { glassTokens, tokens } from '@/theme/theme';
+import { duration, ease, stagger } from '@/theme/motion';
 
 interface TimelineGalleryProps {
   photos: PhotoConfig[];
@@ -48,6 +49,33 @@ function formatMonth(key: string) {
   return `${y} 年 ${Number(m)} 月`;
 }
 
+// 用 variants + staggerChildren 控制入场节奏，不依赖 IntersectionObserver
+// 避免 AnimatePresence 切换视图时 whileInView 不触发的边缘 case
+const groupContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: stagger.tight, delayChildren: 0.08 },
+  },
+};
+
+const itemFadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: duration.slow, ease: ease.entrance },
+  },
+};
+
+const dotPop = {
+  hidden: { scale: 0, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: { duration: duration.base, ease: ease.overshoot },
+  },
+};
+
 export default function TimelineGallery({ photos, onSelect }: TimelineGalleryProps) {
   const groups = useMemo(() => groupByDate(photos), [photos]);
 
@@ -67,9 +95,17 @@ export default function TimelineGallery({ photos, onSelect }: TimelineGalleryPro
 
       <Stack spacing={{ xs: 5, md: 7 }}>
         {groups.map((group) => (
-          <Box key={group.key} sx={{ position: 'relative' }}>
+          <motion.div
+            key={group.key}
+            variants={groupContainer}
+            initial="hidden"
+            animate="visible"
+            style={{ position: 'relative' }}
+          >
             <Box
+              component={motion.span}
               aria-hidden
+              variants={dotPop}
               sx={{
                 position: 'absolute',
                 left: { xs: -20, md: -28 },
@@ -79,31 +115,34 @@ export default function TimelineGallery({ photos, onSelect }: TimelineGalleryPro
                 borderRadius: '50%',
                 background: tokens.primary,
                 boxShadow: `0 0 18px ${tokens.primary}, 0 0 2px rgba(0,0,0,0.4) inset`,
+                display: 'block',
               }}
             />
-            <Typography
-              sx={{
-                fontFamily: '"Cormorant Garamond", serif',
-                fontSize: { xs: 22, md: 26 },
-                letterSpacing: '0.08em',
-                color: 'text.primary',
-                mb: 2,
-              }}
-            >
-              {group.label}
-              <Box
-                component="span"
+            <motion.div variants={itemFadeUp}>
+              <Typography
                 sx={{
-                  ml: 1.5,
-                  color: 'text.secondary',
-                  fontSize: 13,
-                  letterSpacing: '0.04em',
-                  fontFamily: '"Inter", sans-serif',
+                  fontFamily: '"Cormorant Garamond", serif',
+                  fontSize: { xs: 22, md: 26 },
+                  letterSpacing: '0.08em',
+                  color: 'text.primary',
+                  mb: 2,
                 }}
               >
-                {group.photos.length} 张
-              </Box>
-            </Typography>
+                {group.label}
+                <Box
+                  component="span"
+                  sx={{
+                    ml: 1.5,
+                    color: 'text.secondary',
+                    fontSize: 13,
+                    letterSpacing: '0.04em',
+                    fontFamily: '"Inter", sans-serif',
+                  }}
+                >
+                  {group.photos.length} 张
+                </Box>
+              </Typography>
+            </motion.div>
 
             <Box
               sx={{
@@ -117,7 +156,7 @@ export default function TimelineGallery({ photos, onSelect }: TimelineGalleryPro
                 gap: 2.5,
               }}
             >
-              {group.photos.map((photo, idx) => {
+              {group.photos.map((photo) => {
                 const ratio =
                   photo.width && photo.height
                     ? photo.width / photo.height
@@ -125,13 +164,8 @@ export default function TimelineGallery({ photos, onSelect }: TimelineGalleryPro
                 return (
                   <motion.div
                     key={photo.id}
-                    initial={{ opacity: 0, y: 18 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-10% 0px' }}
-                    transition={{
-                      duration: 0.55,
-                      delay: Math.min(idx * 0.05, 0.3),
-                    }}
+                    variants={itemFadeUp}
+                    whileTap={{ scale: 0.985, transition: { duration: 0.12 } }}
                   >
                     <Box
                       role="button"
@@ -150,8 +184,10 @@ export default function TimelineGallery({ photos, onSelect }: TimelineGalleryPro
                         cursor: 'pointer',
                         '&:hover .t-frame': {
                           borderColor: glassTokens.borderStrong,
+                          transform: 'translateY(-3px)',
+                          boxShadow: '0 14px 32px rgba(0,0,0,0.42)',
                         },
-                        '&:hover img': { transform: 'scale(1.04)' },
+                        '&:hover img': { transform: 'scale(1.045)' },
                         '&:focus-visible .t-frame': {
                           outline: '2px solid',
                           outlineColor: 'primary.main',
@@ -166,14 +202,19 @@ export default function TimelineGallery({ photos, onSelect }: TimelineGalleryPro
                           overflow: 'hidden',
                           borderRadius: 3,
                           border: `1px solid ${glassTokens.border}`,
-                          transition: 'border-color 400ms ease',
+                          transition:
+                            'border-color 400ms ease, transform 500ms cubic-bezier(0.22,1,0.36,1), box-shadow 500ms ease',
+                          willChange: 'transform',
                         }}
                       >
                         <AutoImage
                           src={photo.thumbnail ?? photo.src}
                           alt={photo.alt}
                           aspectRatio={ratio}
-                          style={{ transition: 'transform 700ms ease' }}
+                          style={{
+                            transition:
+                              'transform 700ms cubic-bezier(0.22,1,0.36,1)',
+                          }}
                         />
                       </Box>
                       <Box>
@@ -194,7 +235,7 @@ export default function TimelineGallery({ photos, onSelect }: TimelineGalleryPro
                 );
               })}
             </Box>
-          </Box>
+          </motion.div>
         ))}
       </Stack>
     </Box>

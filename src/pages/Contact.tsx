@@ -6,6 +6,7 @@ import { Mail, Instagram, Github, MapPin, ArrowUpRight } from 'lucide-react';
 import PageTransition from '@/components/layout/PageTransition';
 import GlassCard from '@/components/ui/GlassCard';
 import { tokens } from '@/theme/theme';
+import { duration, ease, stagger } from '@/theme/motion';
 
 const CONTACTS = [
   {
@@ -47,7 +48,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: duration.slower, ease: ease.entrance }}
           >
             <Typography
               sx={{
@@ -98,7 +99,11 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
+                transition={{
+                  duration: duration.slow,
+                  delay: i * stagger.base,
+                  ease: ease.entrance,
+                }}
               >
                 <GlassCard
                   interactive={Boolean(item.href)}
@@ -117,10 +122,19 @@ export default function Contact() {
                     justifyContent: 'space-between',
                     color: 'inherit',
                     textDecoration: 'none',
+                    '&:hover .contact-icon': {
+                      transform: 'rotate(-6deg) scale(1.08)',
+                      background: 'rgba(232,185,107,0.18)',
+                    },
+                    '&:hover .contact-arrow': {
+                      transform: 'translate(3px, -3px)',
+                      color: tokens.primary,
+                    },
                   }}
                 >
                   <Stack direction="row" alignItems="center" spacing={2}>
                     <Box
+                      className="contact-icon"
                       sx={{
                         width: 44,
                         height: 44,
@@ -130,6 +144,9 @@ export default function Contact() {
                         justifyContent: 'center',
                         background: 'rgba(232,185,107,0.1)',
                         color: tokens.primary,
+                        transition:
+                          'transform 400ms cubic-bezier(0.34,1.4,0.64,1), background 400ms ease',
+                        willChange: 'transform',
                       }}
                     >
                       {item.icon}
@@ -157,7 +174,15 @@ export default function Contact() {
                     </Box>
                   </Stack>
                   {item.href && (
-                    <Box sx={{ color: 'text.secondary' }}>
+                    <Box
+                      className="contact-arrow"
+                      sx={{
+                        color: 'text.secondary',
+                        transition:
+                          'transform 300ms cubic-bezier(0.22,1,0.36,1), color 300ms ease',
+                        willChange: 'transform',
+                      }}
+                    >
                       <ArrowUpRight size={18} />
                     </Box>
                   )}

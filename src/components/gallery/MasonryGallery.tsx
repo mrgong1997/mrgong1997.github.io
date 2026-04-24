@@ -5,6 +5,7 @@ import AutoImage from '@/components/ui/AutoImage';
 import ExifBar from './ExifBar';
 import type { PhotoConfig } from '@/types/photo';
 import { glassTokens } from '@/theme/theme';
+import { duration, ease, stagger } from '@/theme/motion';
 
 interface MasonryGalleryProps {
   photos: PhotoConfig[];
@@ -48,10 +49,17 @@ export default function MasonryGallery({ photos, onSelect }: MasonryGalleryProps
           return (
             <motion.div
               key={photo.id}
+              layout="position"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10% 0px' }}
-              transition={{ duration: 0.6, delay: Math.min(index * 0.04, 0.3) }}
+              transition={{
+                duration: duration.slow,
+                delay: Math.min(index * stagger.tight, 0.35),
+                ease: ease.entrance,
+                layout: { duration: duration.base, ease: ease.standard },
+              }}
+              whileTap={{ scale: 0.985, transition: { duration: 0.12 } }}
             >
               <Box
                 onClick={() => onSelect(index)}
@@ -70,13 +78,16 @@ export default function MasonryGallery({ photos, onSelect }: MasonryGalleryProps
                   cursor: 'pointer',
                   border: `1px solid ${glassTokens.border}`,
                   background: glassTokens.bg,
-                  transition: 'transform 500ms ease, border-color 500ms ease',
+                  transition:
+                    'transform 500ms cubic-bezier(0.22,1,0.36,1), border-color 500ms ease, box-shadow 500ms ease',
+                  willChange: 'transform',
                   '&:hover': {
                     borderColor: glassTokens.borderStrong,
-                    transform: 'translateY(-3px)',
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 18px 40px rgba(0,0,0,0.45)',
                   },
                   '&:hover .overlay': { opacity: 1 },
-                  '&:hover img': { transform: 'scale(1.03)' },
+                  '&:hover img': { transform: 'scale(1.045)' },
                   '&:focus-visible': {
                     outline: '2px solid',
                     outlineColor: 'primary.main',
@@ -88,7 +99,7 @@ export default function MasonryGallery({ photos, onSelect }: MasonryGalleryProps
                   src={photo.thumbnail ?? photo.src}
                   alt={photo.alt}
                   aspectRatio={ratio}
-                  style={{ transition: 'transform 700ms ease' }}
+                  style={{ transition: 'transform 700ms cubic-bezier(0.22,1,0.36,1)' }}
                 />
                 <Box
                   className="overlay"
@@ -103,7 +114,9 @@ export default function MasonryGallery({ photos, onSelect }: MasonryGalleryProps
                     background:
                       'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.78) 100%)',
                     opacity: 0,
-                    transition: 'opacity 400ms ease',
+                    transform: 'translateY(6px)',
+                    transition:
+                      'opacity 400ms ease, transform 500ms cubic-bezier(0.22,1,0.36,1)',
                   }}
                 >
                   <Typography

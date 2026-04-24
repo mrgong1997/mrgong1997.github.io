@@ -1,19 +1,53 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link as RouterLink } from 'react-router-dom';
 import type { PhotoConfig } from '@/types/photo';
 import { tokens } from '@/theme/theme';
+import { duration, ease, stagger, variants } from '@/theme/motion';
 
 interface HeroProps {
   hero?: PhotoConfig;
 }
 
+const TITLE = 'Chasing Light';
+
+// 大标题的容器 + 字符子项 variants
+// 用 stagger 让每个字母先后浮起，打造"字从光里显形"的感觉
+const titleContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: stagger.base, delayChildren: 0.35 },
+  },
+};
+
+const titleLetter = {
+  hidden: { opacity: 0, y: 38, filter: 'blur(10px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: duration.slower, ease: ease.entrance },
+  },
+};
+
 export default function Hero({ hero }: HeroProps) {
   const bg = hero?.src ?? hero?.thumbnail;
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+  // 滚动视差：背景图下沉慢、文字上移快，形成景深
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-6%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
+
   return (
     <Box
+      ref={sectionRef}
       component="section"
       sx={{
         position: 'relative',
@@ -26,18 +60,19 @@ export default function Hero({ hero }: HeroProps) {
       }}
     >
       {bg && (
-        <Box
-          component={motion.div}
-          initial={{ scale: 1.08, opacity: 0 }}
+        <motion.div
+          initial={{ scale: 1.12, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          sx={{
+          transition={{ duration: duration.epic, ease: ease.gentle }}
+          style={{
             position: 'absolute',
             inset: 0,
+            y: bgY,
             backgroundImage: `url(${bg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'saturate(1.05)',
+            willChange: 'transform',
           }}
         />
       )}
@@ -51,41 +86,43 @@ export default function Hero({ hero }: HeroProps) {
         }}
       />
 
-      <Box
-        sx={{
+      <motion.div
+        style={{
           position: 'relative',
           zIndex: 1,
           width: '100%',
           maxWidth: 1100,
-          px: { xs: 3, md: 6 },
           textAlign: 'center',
+          y: contentY,
+          opacity: contentOpacity,
         }}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-        >
-          <Typography
-            sx={{
-              fontSize: 12,
-              letterSpacing: '0.5em',
-              color: tokens.primary,
-              textTransform: 'uppercase',
-              mb: 3,
-            }}
+        <Box sx={{ px: { xs: 3, md: 6 } }}>
+          <motion.div
+            variants={variants.fadeUpSm}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.2 }}
           >
-            A personal photo journal · 2025
-          </Typography>
-        </motion.div>
+            <Typography
+              sx={{
+                fontSize: 12,
+                letterSpacing: '0.5em',
+                color: tokens.primary,
+                textTransform: 'uppercase',
+                mb: 3,
+              }}
+            >
+              A personal photo journal · 2025
+            </Typography>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.35 }}
-        >
           <Typography
-            component="h1"
+            component={motion.h1}
+            variants={titleContainer}
+            initial="hidden"
+            animate="visible"
+            aria-label={TITLE}
             sx={{
               fontFamily: '"Cormorant Garamond", serif',
               fontSize: { xs: 68, sm: 108, md: 148, lg: 168 },
@@ -95,88 +132,103 @@ export default function Hero({ hero }: HeroProps) {
               letterSpacing: '-0.01em',
               color: 'text.primary',
               mb: 1.5,
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
             }}
           >
-            Chasing Light
+            {TITLE.split('').map((ch, i) => (
+              <motion.span
+                key={`${ch}-${i}`}
+                variants={titleLetter}
+                style={{
+                  display: 'inline-block',
+                  whiteSpace: ch === ' ' ? 'pre' : 'normal',
+                }}
+                aria-hidden
+              >
+                {ch}
+              </motion.span>
+            ))}
           </Typography>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <Typography
-            sx={{
-              fontSize: { xs: 13, md: 15 },
-              letterSpacing: '0.35em',
-              color: 'rgba(245,245,247,0.72)',
-              mb: 4,
-            }}
+          <motion.div
+            initial={{ opacity: 0, y: 16, letterSpacing: '0.5em' }}
+            animate={{ opacity: 1, y: 0, letterSpacing: '0.35em' }}
+            transition={{ duration: duration.slower, delay: 1.1, ease: ease.entrance }}
           >
-            光 之 所 至
-          </Typography>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.65 }}
-        >
-          <Typography
-            sx={{
-              maxWidth: 560,
-              mx: 'auto',
-              color: 'rgba(245,245,247,0.7)',
-              fontSize: { xs: 14.5, md: 16 },
-              lineHeight: 1.85,
-              mb: 5,
-            }}
-          >
-            收在这里的不是风景，是我某个清晨、某次转角、某段等车时的看见。
-          </Typography>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.85 }}
-        >
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={2}
-            justifyContent="center"
-          >
-            <Button
-              component={RouterLink}
-              to="/gallery"
-              variant="contained"
-              endIcon={<ArrowRight size={16} />}
-              sx={{ px: 3.5, py: 1.25, fontSize: 15 }}
+            <Typography
+              sx={{
+                fontSize: { xs: 13, md: 15 },
+                color: 'rgba(245,245,247,0.72)',
+                mb: 4,
+              }}
             >
-              查看作品集
-            </Button>
-            <Button
-              component={RouterLink}
-              to="/about"
-              variant="outlined"
-              sx={{ px: 3.5, py: 1.25, fontSize: 15, color: 'text.primary' }}
-            >
-              关于我
-            </Button>
-          </Stack>
-        </motion.div>
-      </Box>
+              光 之 所 至
+            </Typography>
+          </motion.div>
 
-      <Box
-        component={motion.div}
+          <motion.div
+            variants={variants.fadeUp}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 1.3 }}
+          >
+            <Typography
+              sx={{
+                maxWidth: 560,
+                mx: 'auto',
+                color: 'rgba(245,245,247,0.7)',
+                fontSize: { xs: 14.5, md: 16 },
+                lineHeight: 1.85,
+                mb: 5,
+              }}
+            >
+              收在这里的不是风景，是我某个清晨、某次转角、某段等车时的看见。
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            variants={variants.fadeUpSm}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 1.5 }}
+          >
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={2}
+              justifyContent="center"
+            >
+              <Button
+                component={RouterLink}
+                to="/gallery"
+                variant="contained"
+                endIcon={<ArrowRight size={16} />}
+                sx={{ px: 3.5, py: 1.25, fontSize: 15 }}
+              >
+                查看作品集
+              </Button>
+              <Button
+                component={RouterLink}
+                to="/about"
+                variant="outlined"
+                sx={{ px: 3.5, py: 1.25, fontSize: 15, color: 'text.primary' }}
+              >
+                关于我
+              </Button>
+            </Stack>
+          </motion.div>
+        </Box>
+      </motion.div>
+
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 8, 0] }}
         transition={{
-          opacity: { duration: 1, delay: 1.2 },
+          opacity: { duration: duration.slower, delay: 1.8 },
           y: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
         }}
-        sx={{
+        style={{
           position: 'absolute',
           bottom: 24,
           left: '50%',
@@ -184,7 +236,7 @@ export default function Hero({ hero }: HeroProps) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          color: 'text.secondary',
+          color: 'rgba(245,245,247,0.55)',
           fontSize: 11,
           letterSpacing: '0.3em',
           zIndex: 1,
@@ -192,7 +244,7 @@ export default function Hero({ hero }: HeroProps) {
       >
         SCROLL
         <ChevronDown size={16} style={{ marginTop: 4 }} />
-      </Box>
+      </motion.div>
     </Box>
   );
 }

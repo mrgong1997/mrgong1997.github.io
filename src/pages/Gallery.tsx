@@ -7,7 +7,7 @@ import {
   Typography,
   Divider,
 } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import PageTransition from '@/components/layout/PageTransition';
 import MasonryGallery from '@/components/gallery/MasonryGallery';
@@ -18,6 +18,7 @@ import ViewModeToggle, { type ViewMode } from '@/components/gallery/ViewModeTogg
 
 import { photos, categories } from '@/config/photos';
 import { tokens } from '@/theme/theme';
+import { duration, ease } from '@/theme/motion';
 
 export default function Gallery() {
   const [view, setView] = useState<ViewMode>('masonry');
@@ -42,7 +43,7 @@ export default function Gallery() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: duration.slower, ease: ease.entrance }}
           >
             <Typography
               sx={{
@@ -91,15 +92,24 @@ export default function Gallery() {
             </Typography>
           </Stack>
 
-          {view === 'masonry' && (
-            <Box sx={{ mb: 4 }}>
-              <CategoryFilter
-                categories={categories}
-                active={category}
-                onChange={setCategory}
-              />
-            </Box>
-          )}
+          <AnimatePresence initial={false}>
+            {view === 'masonry' && (
+              <motion.div
+                key="filter"
+                initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginBottom: 32 }}
+                exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                transition={{ duration: duration.base, ease: ease.standard }}
+                style={{ overflow: 'hidden' }}
+              >
+                <CategoryFilter
+                  categories={categories}
+                  active={category}
+                  onChange={setCategory}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <Divider
             sx={{
@@ -108,24 +118,31 @@ export default function Gallery() {
             }}
           />
 
-          {view === 'masonry' ? (
-            <MasonryGallery
-              photos={filtered}
-              onSelect={(i) => {
-                setIndex(i);
-                setOpen(true);
-              }}
-            />
-          ) : (
-            <TimelineGallery
-              photos={photos}
-              onSelect={(photo) => {
-                const i = photos.findIndex((p) => p.id === photo.id);
-                setIndex(i >= 0 ? i : 0);
-                setOpen(true);
-              }}
-            />
-          )}
+          <motion.div
+            key={view}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: duration.base, ease: ease.entrance }}
+          >
+            {view === 'masonry' ? (
+              <MasonryGallery
+                photos={filtered}
+                onSelect={(i) => {
+                  setIndex(i);
+                  setOpen(true);
+                }}
+              />
+            ) : (
+              <TimelineGallery
+                photos={photos}
+                onSelect={(photo) => {
+                  const i = photos.findIndex((p) => p.id === photo.id);
+                  setIndex(i >= 0 ? i : 0);
+                  setOpen(true);
+                }}
+              />
+            )}
+          </motion.div>
         </Container>
       </Box>
 

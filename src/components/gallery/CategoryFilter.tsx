@@ -34,13 +34,21 @@ export default function CategoryFilter({
               fontSize: 13,
               letterSpacing: '0.04em',
               color: isActive ? tokens.primary : 'text.secondary',
-              borderColor: isActive ? alpha(tokens.primary, 0.5) : undefined,
-              background: isActive
-                ? alpha(tokens.primary, 0.1)
-                : undefined,
+              borderColor: isActive
+                ? alpha(tokens.primary, 0.55)
+                : 'rgba(255,255,255,0.08)',
+              background: isActive ? alpha(tokens.primary, 0.12) : 'transparent',
               '&:hover': {
-                borderColor: alpha(tokens.primary, 0.5),
+                borderColor: alpha(tokens.primary, 0.55),
                 color: tokens.primary,
+                background: isActive
+                  ? alpha(tokens.primary, 0.16)
+                  : alpha('#ffffff', 0.04),
+              },
+              '&:focus-visible': {
+                outline: 'none',
+                borderColor: alpha(tokens.primary, 0.7),
+                boxShadow: `0 0 0 3px ${alpha(tokens.primary, 0.25)}`,
               },
             }}
           />

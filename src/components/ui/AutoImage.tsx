@@ -35,13 +35,20 @@ export default function AutoImage({
     >
       {!loaded && (
         <Box
+          aria-hidden
           sx={{
             position: 'absolute',
             inset: 0,
-            background:
-              'linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.02) 100%)',
-            backgroundSize: '200% 100%',
-            animation: 'auroraDrift 2s ease-in-out infinite',
+            overflow: 'hidden',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              inset: 0,
+              background:
+                'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%)',
+              animation: 'shimmerSweep 1.6s ease-in-out infinite',
+              willChange: 'transform',
+            },
           }}
         />
       )}
