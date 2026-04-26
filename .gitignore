@@ -1,5 +1,9 @@
 node_modules
 dist
+
+# 相机 RAW，体积大且本站流水线不收录；导出 JPG 后再加入仓库
+*.CR3
+*.cr3
 dist-ssr
 *.local
 
