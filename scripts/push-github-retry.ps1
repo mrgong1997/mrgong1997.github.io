@@ -13,6 +13,13 @@ $sleepSec = 6
 git config http.version HTTP/1.1 2>$null | Out-Null
 git config http.postBuffer 524288000 2>$null | Out-Null
 
+Write-Host "git pull --rebase origin main ..."
+git pull --rebase origin main
+if ($LASTEXITCODE -ne 0) {
+  Write-Warning "Pull --rebase failed (exit $LASTEXITCODE). Resolve conflicts or check network, then re-run."
+  exit $LASTEXITCODE
+}
+
 for ($i = 1; $i -le $max; $i++) {
   Write-Host "[$i/$max] git push origin main ..."
   git push origin main

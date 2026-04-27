@@ -22,3 +22,11 @@ pnpm-debug.log*
 
 .env
 .env.local
+
+# TypeScript incremental build metadata（勿提交）
+*.tsbuildinfo
+
+# 本地 Cursor / skills CLI 安装目录（勿提交）
+.agents/
+skills/
+skills-lock.json
