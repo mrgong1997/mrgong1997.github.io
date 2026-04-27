@@ -1,4 +1,10 @@
-import { useMemo, useState } from 'react';
+import {
+  useMemo,
+  useState,
+  useCallback,
+  startTransition,
+  useDeferredValue,
+} from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
   Box,
@@ -26,10 +32,19 @@ export default function Gallery() {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
+  const deferredCategory = useDeferredValue(category);
   const filtered = useMemo(() => {
-    if (category === '全部') return photos;
-    return photos.filter((p) => p.tags?.includes(category));
-  }, [category]);
+    if (deferredCategory === '全部') return photos;
+    return photos.filter((p) => p.tags?.includes(deferredCategory));
+  }, [deferredCategory]);
+
+  const handleViewChange = useCallback((next: ViewMode) => {
+    startTransition(() => setView(next));
+  }, []);
+
+  const handleCategoryChange = useCallback((next: string) => {
+    startTransition(() => setCategory(next));
+  }, []);
 
   return (
     <PageTransition>
@@ -86,8 +101,15 @@ export default function Gallery() {
             spacing={2}
             sx={{ mb: 3 }}
           >
-            <ViewModeToggle value={view} onChange={setView} />
-            <Typography sx={{ color: 'text.secondary', fontSize: 13 }}>
+            <ViewModeToggle value={view} onChange={handleViewChange} />
+            <Typography
+              sx={{
+                color: 'text.secondary',
+                fontSize: 13,
+                opacity: category !== deferredCategory ? 0.65 : 1,
+                transition: 'opacity 200ms ease',
+              }}
+            >
               共 {filtered.length} 张 · 从 {photos.length} 张中筛选
             </Typography>
           </Stack>
@@ -105,7 +127,7 @@ export default function Gallery() {
                 <CategoryFilter
                   categories={categories}
                   active={category}
-                  onChange={setCategory}
+                  onChange={handleCategoryChange}
                 />
               </motion.div>
             )}

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Stack, Chip } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { tokens } from '@/theme/theme';
@@ -8,7 +9,7 @@ interface CategoryFilterProps {
   onChange: (value: string) => void;
 }
 
-export default function CategoryFilter({
+function CategoryFilter({
   categories,
   active,
   onChange,
@@ -57,3 +58,5 @@ export default function CategoryFilter({
     </Stack>
   );
 }
+
+export default memo(CategoryFilter);
