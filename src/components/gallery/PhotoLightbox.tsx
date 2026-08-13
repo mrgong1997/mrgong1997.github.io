@@ -4,6 +4,7 @@ import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import ExifBar from './ExifBar';
 import type { PhotoConfig } from '@/types/photo';
+import { displaySrc, preloadImage } from '@/utils/photo';
 import { glassTokens } from '@/theme/theme';
 import { duration, ease } from '@/theme/motion';
 
@@ -66,6 +67,14 @@ export default function PhotoLightbox({
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [open, onClose, goPrev, goNext]);
+
+  useEffect(() => {
+    if (!open || photos.length < 2) return;
+    const prev = photos[(index - 1 + photos.length) % photos.length];
+    const next = photos[(index + 1) % photos.length];
+    if (prev) preloadImage(displaySrc(prev));
+    if (next) preloadImage(displaySrc(next));
+  }, [open, index, photos]);
 
   if (!current) return null;
 
@@ -175,7 +184,7 @@ export default function PhotoLightbox({
           <AnimatePresence mode="wait" custom={direction} initial={false}>
             <motion.img
               key={current.id}
-              src={current.src}
+              src={displaySrc(current)}
               alt={current.alt}
               custom={direction}
               drag={photos.length > 1 ? 'x' : false}

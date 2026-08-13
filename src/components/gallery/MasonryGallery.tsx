@@ -99,6 +99,7 @@ export default function MasonryGallery({ photos, onSelect }: MasonryGalleryProps
                   src={photo.thumbnail ?? photo.src}
                   alt={photo.alt}
                   aspectRatio={ratio}
+                  priority={index < 4}
                   style={{ transition: 'transform 700ms cubic-bezier(0.22,1,0.36,1)' }}
                 />
                 <Box

@@ -8,8 +8,8 @@ import Footer from './components/layout/Footer';
 import PageFallback from './components/layout/PageFallback';
 import BackgroundAurora from './components/ui/BackgroundAurora';
 import ScrollProgress from './components/ui/ScrollProgress';
+import Home from './pages/Home';
 
-const Home = lazy(() => import('@/pages/Home'));
 const Gallery = lazy(() => import('@/pages/Gallery'));
 const About = lazy(() => import('@/pages/About'));
 const Contact = lazy(() => import('@/pages/Contact'));

@@ -10,6 +10,7 @@ import Hero from '@/components/home/Hero';
 import Intro from '@/components/home/Intro';
 import FeaturedWorks from '@/components/home/FeaturedWorks';
 import { photos } from '@/config/photos';
+import { displaySrc } from '@/utils/photo';
 import { tokens } from '@/theme/theme';
 
 export default function Home() {
@@ -28,6 +29,9 @@ export default function Home() {
           name="description"
           content="Chasing Light 是一份私人摄影作品集，收录城市、风景、街头与人像的光影瞬间。"
         />
+        {heroPhoto && (
+          <link rel="preload" as="image" href={displaySrc(heroPhoto)} />
+        )}
       </Helmet>
 
       <Hero hero={heroPhoto} />

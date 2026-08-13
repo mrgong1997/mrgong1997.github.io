@@ -23,6 +23,12 @@ const NAV_ITEMS = [
   { label: '联系', path: '/contact' },
 ];
 
+const prefetchRoute = (path: string) => {
+  if (path === '/gallery') void import('../../pages/Gallery');
+  else if (path === '/about') void import('../../pages/About');
+  else if (path === '/contact') void import('../../pages/Contact');
+};
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -126,6 +132,8 @@ export default function Navbar() {
                 to={item.path}
                 end={item.path === '/'}
                 style={{ textDecoration: 'none' }}
+                onMouseEnter={() => prefetchRoute(item.path)}
+                onFocus={() => prefetchRoute(item.path)}
               >
                 {({ isActive }) => (
                   <Box

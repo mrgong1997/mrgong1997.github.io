@@ -6,6 +6,8 @@ interface AutoImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   alt: string;
   aspectRatio?: number;
   rounded?: boolean;
+  /** 首屏关键图：关闭懒加载并提高优先级 */
+  priority?: boolean;
 }
 
 export default function AutoImage({
@@ -13,6 +15,8 @@ export default function AutoImage({
   alt,
   aspectRatio,
   rounded = false,
+  priority = false,
+  sizes,
   style,
   onLoad,
   ...rest
@@ -55,8 +59,13 @@ export default function AutoImage({
       <img
         src={src}
         alt={alt}
-        loading="lazy"
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : 'auto'}
         decoding="async"
+        sizes={
+          sizes ??
+          '(max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 25vw'
+        }
         onLoad={(e) => {
           const img = e.currentTarget;
           if (!ratio && img.naturalWidth && img.naturalHeight) {

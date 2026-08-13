@@ -145,6 +145,8 @@ export default function FeaturedWorks({ photos }: FeaturedWorksProps) {
                     src={photo.thumbnail ?? photo.src}
                     alt={photo.alt}
                     aspectRatio={ratio}
+                    priority={i < 2}
+                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
                     style={{
                       transition:
                         'transform 700ms cubic-bezier(0.22,1,0.36,1)',

@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link as RouterLink } from 'react-router-dom';
 import type { PhotoConfig } from '@/types/photo';
+import { displaySrc } from '@/utils/photo';
 import { tokens } from '@/theme/theme';
 import { duration, ease, stagger, variants } from '@/theme/motion';
 
@@ -33,7 +34,7 @@ const titleLetter = {
 };
 
 export default function Hero({ hero }: HeroProps) {
-  const bg = hero?.src ?? hero?.thumbnail;
+  const bg = hero ? displaySrc(hero) : undefined;
 
   const sectionRef = useRef<HTMLDivElement>(null);
   // 滚动视差：背景图下沉慢、文字上移快，形成景深
@@ -66,15 +67,25 @@ export default function Hero({ hero }: HeroProps) {
           transition={{ duration: duration.epic, ease: ease.gentle }}
           style={{
             position: 'absolute',
-            inset: 0,
+            inset: '-8% 0',
             y: bgY,
-            backgroundImage: `url(${bg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'saturate(1.05)',
             willChange: 'transform',
           }}
-        />
+        >
+          <img
+            src={bg}
+            alt=""
+            fetchPriority="high"
+            decoding="async"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              filter: 'saturate(1.05)',
+            }}
+          />
+        </motion.div>
       )}
       <Box
         aria-hidden
